@@ -43,12 +43,6 @@ enum class DarkMode(val textRes: Int) {
  */
 @Composable
 fun isLauncherInDarkTheme(): Boolean {
-    val value = AllSettings.launcherDarkMode.state
-    return key(value) {
-        when (value) {
-            DarkMode.Enable -> true
-            DarkMode.Disable -> false
-            DarkMode.FollowSystem -> isSystemInDarkTheme()
-        }
-    }
+    //NusaLauncher: tampilan Nusa Dark hanya punya mode gelap; pengaturan mode terang diabaikan
+    return true
 }

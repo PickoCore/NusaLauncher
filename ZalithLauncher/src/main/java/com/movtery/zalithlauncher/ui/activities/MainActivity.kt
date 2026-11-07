@@ -30,6 +30,9 @@ import android.widget.Toast
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
+import com.movtery.zalithlauncher.ui.nusa.NusaColors
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.background
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -344,9 +347,11 @@ class MainActivity : BaseAppCompatActivity() {
                     guides.mainScreen,
                     nextTip = { NextTipLabel(it) }
                 ) {
-                    Background(
-                        modifier = Modifier.fillMaxSize(),
-                        viewModel = backgroundViewModel
+                    //NusaLauncher: latar polos Nusa Dark menggantikan wallpaper
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(NusaColors.Background)
                     )
 
                     MainScreen(

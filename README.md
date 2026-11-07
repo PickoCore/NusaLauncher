@@ -32,6 +32,7 @@ NusaLauncher masih dalam **tahap uji**. Belum ada rilis resmi, dan aplikasinya m
 - **Bagikan log ke mclo.gs** dengan penyensoran otomatis (UUID, token, email, dan alamat IP disamarkan sebelum diunggah).
 - **Arsip log otomatis.** Log tiap sesi game disimpan saat kamu keluar dengan nama `NusaLogs-2026-10-06-19.41.MobileGlues.log` dan disimpan 30 hari. Lihat [docs/logs.md](docs/logs.md).
 - **Pengukur frame time.** Setiap 5 detik log game memuat baris `[NusaFrameStats]` berisi FPS rata-rata, 1% low, jitter, dan jumlah sentakan, agar masalah "FPS tinggi tapi patah-patah" bisa diukur. Lihat [docs/performance-testing.md](docs/performance-testing.md).
+- **Beranda baru bertema Nusa Dark** (hitam dengan satu aksen oranye, sudut kartu dipotong miring): versi terpilih dan tombol Main, kartu akun, ringkasan sesi terakhir lengkap dengan grafik frame time, serta rekomendasi renderer dari sesi-sesimu sendiri.
 - Identitas baru: nama, ikon, dan paket aplikasi sendiri (`com.pickocore.nusalauncher`).
 
 ### Dalam rencana (belum tersedia)
@@ -39,7 +40,7 @@ NusaLauncher masih dalam **tahap uji**. Belum ada rilis resmi, dan aplikasinya m
 - Layar **Riwayat log** di dalam aplikasi (daftar, lihat, bagikan, hapus).
 - **Main bareng** lewat jaringan lokal (satu WiFi), dengan opsi lintas versi.
 - **Pusat renderer** dan benchmark untuk memilih renderer yang paling cocok di HP-mu.
-- Tema antarmuka hitam dan oranye.
+- Tema Nusa Dark untuk layar lainnya (Versi, Unduh, Pengaturan, dan tampilan dalam game). Saat ini baru Beranda yang dirancang ulang; layar lain hanya berganti warna dan huruf.
 - Login Microsoft yang diuji penuh. Kode dasarnya ikut dari Zalith, tetapi belum kami uji.
 
 ## Unduh

@@ -65,6 +65,15 @@ Diadaptasi dari panduan "anti-slop" yang dirujuk proyek ini. Periksa setiap laya
 - Keadaan kosong mengajak bertindak ("Belum ada log. Main dulu, lognya tersimpan otomatis").
 - Istilah teknis diberi penjelasan satu kalimat.
 
+## Status penerapan
+
+| Layar | Status |
+|---|---|
+| Tema (warna, huruf) | Dipasang ke seluruh aplikasi. Mode terang dan warna dinamis dari Zalith diabaikan. |
+| Beranda | Dirancang ulang (`NusaHomeScreen`); Beranda lama dihapus. |
+| Rel navigasi, Akun, Versi, Unduh, Pengaturan | Belum, hanya berganti warna dan huruf. |
+| Tampilan dalam game dan kontrol | Belum. Dikerjakan paling akhir dan paling hati-hati. |
+
 ## Proses tiap layar
 
 1. **Rencana singkat:** sketsa ASCII atau papan konsep, token yang dipakai, apa yang jadi satu hal yang diingat.
