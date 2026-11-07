@@ -27,6 +27,7 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import com.movtery.zalithlauncher.ui.nusa.NusaTheme
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -599,89 +600,22 @@ private fun customDark(
     )
 }
 
+/**
+ * NusaLauncher: seluruh aplikasi memakai tema Nusa Dark. Pengaturan warna, mode terang,
+ * dan warna dinamis dari Zalith tidak lagi dipakai. Signature dipertahankan agar semua Activity tetap kompatibel.
+ */
 @Composable
 fun ZalithLauncherTheme(
-    darkTheme: Boolean = isLauncherInDarkTheme(),
-    // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
+    @Suppress("UNUSED_PARAMETER") darkTheme: Boolean = true,
+    @Suppress("UNUSED_PARAMETER") dynamicColor: Boolean = false,
     backgroundViewModel: BackgroundViewModel? = null,
     festivals: List<Festival> = emptyList(),
     content: @Composable () -> Unit
 ) {
-    val colorTheme = AllSettings.launcherColorTheme.state
-    val customColorInt = AllSettings.launcherCustomColor.state
-    val customColor = Color(customColorInt)
-    val customPaletteStyle = AllSettings.launcherCustomPaletteStyle.state
-
-    val context = LocalContext.current
-
-    val targetColorScheme = remember(darkTheme, dynamicColor, colorTheme, customColor, customPaletteStyle) {
-        when {
-            dynamicColor && colorTheme == ColorThemeType.DYNAMIC && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-                if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-            }
-
-            darkTheme -> when (colorTheme) {
-                ColorThemeType.EMBERMIRE -> embermireDark
-                ColorThemeType.VELVET_ROSE -> velvetRoseDark
-                ColorThemeType.MISTWAVE -> mistwaveDark
-                ColorThemeType.GLACIER -> glacierDark
-                ColorThemeType.VERDANTFIELD -> verdantFieldDark
-                ColorThemeType.URBAN_ASH -> urbanAshDark
-                ColorThemeType.VERDANT_DAWN -> verdantDawnDark
-                ColorThemeType.CUSTOM -> customDark(
-                    color = customColor,
-                    style = customPaletteStyle
-                )
-                else -> embermireDark
-            }
-
-            else -> when (colorTheme) {
-                ColorThemeType.EMBERMIRE -> embermireLight
-                ColorThemeType.VELVET_ROSE -> velvetRoseLight
-                ColorThemeType.MISTWAVE -> mistwaveLight
-                ColorThemeType.GLACIER -> glacierLight
-                ColorThemeType.VERDANTFIELD -> verdantFieldLight
-                ColorThemeType.URBAN_ASH -> urbanAshLight
-                ColorThemeType.VERDANT_DAWN -> verdantDawnLight
-                ColorThemeType.CUSTOM -> customLight(
-                    color = customColor,
-                    style = customPaletteStyle
-                )
-                else -> embermireLight
-            }
-        }
-    }
-
-    var currentDarkTheme by remember { mutableStateOf(darkTheme) }
-    var currentDisplayScheme by remember { mutableStateOf(targetColorScheme) }
-
-    LaunchedEffect(darkTheme, targetColorScheme) {
-        if (darkTheme != currentDarkTheme) {
-            context.activeMaskView(
-                maskComplete = {
-                    currentDarkTheme = darkTheme
-                    currentDisplayScheme = targetColorScheme
-                },
-                maskAnimFinish = {
-
-                }
-            )
-        } else {
-            currentDarkTheme = darkTheme
-            currentDisplayScheme = targetColorScheme
-        }
-    }
-
     CompositionLocalProvider(
         LocalBackgroundViewModel provides backgroundViewModel,
         LocalFestivals provides festivals
     ) {
-        MaterialExpressiveTheme(
-            colorScheme = currentDisplayScheme,
-            motionScheme = MotionScheme.expressive(),
-            typography = AppTypography,
-            content = content
-        )
+        NusaTheme(content = content)
     }
 }

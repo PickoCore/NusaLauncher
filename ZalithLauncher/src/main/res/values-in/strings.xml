@@ -1506,4 +1506,23 @@
     <string name="log_history_delete_all_confirm">Hapus semua %1$d log tersimpan?</string>
     <string name="settings_launcher_log_history_title">Riwayat log</string>
     <string name="settings_launcher_log_history_summary">Lihat, bagikan, atau hapus log yang tersimpan dari tiap sesi game</string>
+    <!-- NusaLauncher: new Home -->
+    <string name="nusa_home_play">Main</string>
+    <string name="nusa_home_no_version">Belum ada versi</string>
+    <string name="nusa_home_no_version_hint">Pasang atau pilih versi Minecraft untuk mulai bermain.</string>
+    <string name="nusa_home_choose_version">Pilih versi</string>
+    <string name="nusa_home_change_version">Ganti versi</string>
+    <string name="nusa_home_renderer_chip">Renderer: %1$s</string>
+    <string name="nusa_home_ram_chip">RAM: %1$s GB</string>
+    <string name="nusa_home_session_title">Sesi terakhir</string>
+    <string name="nusa_home_session_empty">Belum ada sesi tercatat. Main beberapa menit, hasilnya muncul di sini.</string>
+    <string name="nusa_home_session_summary">Rata-rata %1$d FPS, 1%% low %2$d FPS, %3$d sentakan per 5 detik</string>
+    <string name="nusa_home_session_graph_desc">Waktu frame terburuk tiap 5 detik pada sesi terakhir</string>
+    <string name="nusa_home_log_history">Riwayat log</string>
+    <string name="nusa_home_change_account">Ganti akun</string>
+    <string name="nusa_home_renderer_title">Renderer untuk HP ini</string>
+    <string name="nusa_home_reco_text">Paling stabil di sesimu pada versi ini: 1%% low %1$d FPS, dibanding %2$d FPS di %3$s.</string>
+    <string name="nusa_home_reco_empty">Data belum cukup. Mainkan versi ini dengan renderer lain selama beberapa menit, lalu rekomendasi muncul di sini.</string>
+    <string name="nusa_home_renderer_settings">Pengaturan renderer</string>
+    <string name="nusa_home_unofficial">NusaLauncher %1$s. Unofficial Modified Version, berbasis Zalith Launcher 2.</string>
 </resources>

@@ -32,6 +32,7 @@ NusaLauncher is in a **testing phase**. There is no official release yet, and th
 - **Share logs to mclo.gs** with automatic redaction (UUIDs, tokens, emails, and IP addresses are masked before upload).
 - **Automatic log archive.** The log of each game session is saved when you exit, named like `NusaLogs-2026-10-06-19.41.MobileGlues.log`, and kept for 30 days. See [docs/logs.md](docs/logs.md).
 - **Frame-time monitor.** Every 5 seconds the game log gets a `[NusaFrameStats]` line with average FPS, 1% low, jitter, and stutter count, so "high FPS but not smooth" can be measured. See [docs/performance-testing.md](docs/performance-testing.md).
+- **New "Nusa Dark" Home screen** (black with a single orange accent, cut-corner cards): selected version and Play button, account card, a last-session summary with a frame-time graph, and a renderer recommendation based on your own sessions.
 - New identity: its own name, icon, and package (`com.pickocore.nusalauncher`).
 
 ### Planned (not available yet)
@@ -39,7 +40,7 @@ NusaLauncher is in a **testing phase**. There is no official release yet, and th
 - An in-app **log history** screen (list, view, share, delete).
 - **Play together** over a local network (same WiFi), with a cross-version option.
 - A **renderer hub** and benchmark to pick the best renderer for your phone.
-- A black and orange interface theme.
+- The Nusa Dark design for the remaining screens (Versions, Download, Settings, and the in-game UI). For now only Home has been redesigned; other screens only changed colors and fonts.
 - Fully tested Microsoft sign-in. The base code comes from Zalith, but we have not tested it.
 
 ## Download

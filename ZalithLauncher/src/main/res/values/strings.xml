@@ -3107,4 +3107,23 @@
     <string name="guide_joystick_events_events_text1">The triggerable events are the same as those of regular buttons, so you have plenty of freedom here</string>
     <!-- Closing line of the guide card about editing actual key bindings in the Key section -->
     <string name="guide_joystick_events_events_text2">If you only want to control the game, just edit the actual key bindings in the \"Key\" section</string>
+    <!-- NusaLauncher: new Home -->
+    <string name="nusa_home_play">Play</string>
+    <string name="nusa_home_no_version">No version yet</string>
+    <string name="nusa_home_no_version_hint">Install or pick a Minecraft version to start playing.</string>
+    <string name="nusa_home_choose_version">Choose a version</string>
+    <string name="nusa_home_change_version">Change version</string>
+    <string name="nusa_home_renderer_chip">Renderer: %1$s</string>
+    <string name="nusa_home_ram_chip">RAM: %1$s GB</string>
+    <string name="nusa_home_session_title">Last session</string>
+    <string name="nusa_home_session_empty">No session recorded yet. Play for a few minutes and the result appears here.</string>
+    <string name="nusa_home_session_summary">Average %1$d FPS, 1%% low %2$d FPS, %3$d stutters per 5 seconds</string>
+    <string name="nusa_home_session_graph_desc">Worst frame time in each 5 second window of the last session</string>
+    <string name="nusa_home_log_history">Log history</string>
+    <string name="nusa_home_change_account">Change account</string>
+    <string name="nusa_home_renderer_title">Renderer for this phone</string>
+    <string name="nusa_home_reco_text">Most stable in your sessions on this version: 1%% low %1$d FPS, versus %2$d FPS on %3$s.</string>
+    <string name="nusa_home_reco_empty">Not enough data yet. Play this version with another renderer for a few minutes and a recommendation appears here.</string>
+    <string name="nusa_home_renderer_settings">Renderer settings</string>
+    <string name="nusa_home_unofficial">NusaLauncher %1$s. Unofficial Modified Version, based on Zalith Launcher 2.</string>
 </resources>
