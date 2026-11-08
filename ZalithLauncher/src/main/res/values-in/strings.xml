@@ -1525,4 +1525,7 @@
     <string name="nusa_home_reco_empty">Data belum cukup. Mainkan versi ini dengan renderer lain selama beberapa menit, lalu rekomendasi muncul di sini.</string>
     <string name="nusa_home_renderer_settings">Pengaturan renderer</string>
     <string name="nusa_home_unofficial">NusaLauncher %1$s. Unofficial Modified Version, berbasis Zalith Launcher 2.</string>
+    <!-- NusaLauncher: navigation rail -->
+    <string name="nusa_nav_multiplayer">Main bareng</string>
+    <string name="nusa_nav_files">Berkas</string>
 </resources>

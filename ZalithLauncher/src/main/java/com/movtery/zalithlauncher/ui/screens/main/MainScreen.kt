@@ -36,6 +36,10 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.ui.unit.sp
+import com.movtery.zalithlauncher.ui.nusa.NusaType
+import com.movtery.zalithlauncher.ui.nusa.NusaRailItem
+import com.movtery.zalithlauncher.ui.nusa.NusaRail
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -166,196 +170,186 @@ fun MainScreen(
         backgroundColor().copy(alpha = launcherBackgroundOpacity)
     } else backgroundColor()
 
+    val inMultiplayerScreen = mainScreenKey is NormalNavKey.Multiplayer
+    val inDownloadScreen = mainScreenKey is NestedNavKey.Download
+    val inSettingsScreen = mainScreenKey is NestedNavKey.Settings
+    val hasTasks = !taskRunning
+
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = backgroundColor,
         contentColor = onBackgroundColor()
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
+        Row(
+            modifier = Modifier.fillMaxSize()
         ) {
-            TopBar(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(40.dp),
-                mainScreenKey = mainScreenKey,
-                inLauncherScreen = inLauncherScreen,
-                taskRunning = taskRunning,
-                isTasksExpanded = isTaskMenuExpanded,
-                contentColor = onBackgroundColor(),
-                onScreenBack = {
-                    screenBackStackModel.mainScreen.backStack.removeFirstOrNull()
-                },
-                toMainScreen = toMainScreen,
-                toSettingsScreen = {
-                    screenBackStackModel.mainScreen.removeAndNavigateTo(
-                        removes = screenBackStackModel.clearBeforeNavKeys,
-                        screenKey = screenBackStackModel.settingsScreen
+            //NusaLauncher: rel navigasi di kiri menggantikan bilah atas
+            NusaRail(
+                onLogoClick = { if (!inLauncherScreen) toMainScreen() },
+                content = {
+                    NusaRailItem(
+                        selected = inLauncherScreen,
+                        painter = painterResource(R.drawable.ic_home_filled),
+                        label = stringResource(R.string.generic_main_menu),
+                        onClick = { if (!inLauncherScreen) toMainScreen() }
+                    )
+                    NusaRailItem(
+                        selected = inMultiplayerScreen,
+                        painter = painterResource(R.drawable.ic_group_filled),
+                        label = stringResource(R.string.nusa_nav_multiplayer),
+                        onClick = {
+                            if (!inMultiplayerScreen) {
+                                screenBackStackModel.mainScreen.removeAndNavigateTo(
+                                    removes = screenBackStackModel.clearBeforeNavKeys,
+                                    screenKey = NormalNavKey.Multiplayer
+                                )
+                            }
+                        }
+                    )
+                    NusaRailItem(
+                        selected = inDownloadScreen,
+                        painter = painterResource(R.drawable.ic_download_2_filled),
+                        label = stringResource(R.string.generic_download),
+                        onClick = {
+                            if (!inDownloadScreen) screenBackStackModel.navigateToDownload()
+                        }
+                    )
+                    NusaRailItem(
+                        selected = false,
+                        painter = painterResource(R.drawable.ic_folder_filled),
+                        label = stringResource(R.string.nusa_nav_files),
+                        onClick = {
+                            eventViewModel.sendEvent(
+                                EventViewModel.Event.OpenFileManager(
+                                    rootPath = PathManager.DIR_FILES_EXTERNAL.absolutePath
+                                )
+                            )
+                        }
                     )
                 },
-                toDownloadScreen = {
-                    screenBackStackModel.navigateToDownload()
-                },
-                toMultiplayerScreen = {
-                    screenBackStackModel.mainScreen.removeAndNavigateTo(
-                        removes = screenBackStackModel.clearBeforeNavKeys,
-                        screenKey = NormalNavKey.Multiplayer
-                    )
-                },
-                openFileManager = {
-                    eventViewModel.sendEvent(
-                        EventViewModel.Event.OpenFileManager(
-                            rootPath = PathManager.DIR_FILES_EXTERNAL.absolutePath
+                footer = {
+                    if (hasTasks) {
+                        NusaRailItem(
+                            selected = isTaskMenuExpanded,
+                            painter = painterResource(R.drawable.ic_assignment_filled),
+                            label = stringResource(R.string.main_task_menu),
+                            onClick = { changeTasksExpandedState() },
+                            showProgress = true
                         )
+                    }
+                    NusaRailItem(
+                        selected = inSettingsScreen,
+                        painter = painterResource(R.drawable.ic_settings_filled),
+                        label = stringResource(R.string.generic_setting),
+                        onClick = {
+                            if (!inSettingsScreen) {
+                                screenBackStackModel.mainScreen.removeAndNavigateTo(
+                                    removes = screenBackStackModel.clearBeforeNavKeys,
+                                    screenKey = screenBackStackModel.settingsScreen
+                                )
+                            }
+                        }
                     )
-                },
-                changeExpandedState = {
-                    changeTasksExpandedState()
-                },
+                }
             )
 
-            Box(
+            Column(
                 modifier = Modifier
-                    .fillMaxWidth()
                     .weight(1f)
+                    .fillMaxHeight()
             ) {
-                NavStateHost(rootKey = screenBackStackModel.mainScreen) {
-                    NavigationUI(
-                        modifier = Modifier.fillMaxSize(),
-                        screenBackStackModel = screenBackStackModel,
-                        toMainScreen = toMainScreen,
-                        eventViewModel = eventViewModel,
-                        modpackImportViewModel = modpackImportViewModel,
-                        modifyVersionViewModel = modifyVersionViewModel,
-                        submitError = submitError
+                AnimatedVisibility(visible = !inLauncherScreen) {
+                    TopBar(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(44.dp),
+                        mainScreenKey = mainScreenKey,
+                        contentColor = onBackgroundColor(),
+                        onScreenBack = {
+                            screenBackStackModel.mainScreen.backStack.removeFirstOrNull()
+                        }
                     )
                 }
 
-                TaskMenu(
-                    isExpanded = isTaskMenuExpanded,
+                Box(
                     modifier = Modifier
-                        .fillMaxHeight()
-                        .fillMaxWidth(0.3f)
-                        .align(Alignment.CenterStart)
-                        .padding(all = 6.dp)
+                        .fillMaxWidth()
+                        .weight(1f)
                 ) {
-                    changeTasksExpandedState()
+                    NavStateHost(rootKey = screenBackStackModel.mainScreen) {
+                        NavigationUI(
+                            modifier = Modifier.fillMaxSize(),
+                            screenBackStackModel = screenBackStackModel,
+                            toMainScreen = toMainScreen,
+                            eventViewModel = eventViewModel,
+                            modpackImportViewModel = modpackImportViewModel,
+                            modifyVersionViewModel = modifyVersionViewModel,
+                            submitError = submitError
+                        )
+                    }
+
+                    TaskMenu(
+                        isExpanded = isTaskMenuExpanded,
+                        modifier = Modifier
+                            .fillMaxHeight()
+                            .fillMaxWidth(0.3f)
+                            .align(Alignment.CenterStart)
+                            .padding(all = 6.dp)
+                    ) {
+                        changeTasksExpandedState()
+                    }
                 }
             }
         }
     }
 }
 
+/** NusaLauncher: strip judul tipis (kembali dan judul layar). Tidak tampil di Beranda. */
 @Composable
 private fun <E: TitledNavKey> TopBar(
     mainScreenKey: E?,
-    inLauncherScreen: Boolean,
-    taskRunning: Boolean,
-    isTasksExpanded: Boolean,
     modifier: Modifier = Modifier,
     contentColor: Color,
     onScreenBack: () -> Unit,
-    toMainScreen: () -> Unit,
-    toSettingsScreen: () -> Unit,
-    toDownloadScreen: () -> Unit,
-    toMultiplayerScreen: () -> Unit,
-    openFileManager: () -> Unit,
-    changeExpandedState: () -> Unit,
 ) {
-    val festivals = LocalFestivals.current
-
-    val inMultiplayerScreen = mainScreenKey is NormalNavKey.Multiplayer
-    val inDownloadScreen = mainScreenKey is NestedNavKey.Download
-    val inSettingsScreen = mainScreenKey is NestedNavKey.Settings
-
     CompositionLocalProvider(
         LocalContentColor provides contentColor
     ) {
-        ConstraintLayout(modifier = modifier) {
-            val (backCenter, title, endButtons) = createRefs()
-
+        Row(
+            modifier = modifier,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
             val backDispatcher = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
 
-            Row(
-                modifier = Modifier
-                    .constrainAs(backCenter) {
-                        start.linkTo(parent.start)
-                        top.linkTo(parent.top)
-                        bottom.linkTo(parent.bottom)
-                    }
-                    .fillMaxHeight()
-            ) {
-                AnimatedVisibility(
-                    visible = !inLauncherScreen
-                ) {
-                    Row(modifier = Modifier.fillMaxHeight()) {
-                        Spacer(Modifier.width(12.dp))
-
-                        IconButton(
-                            modifier = Modifier.fillMaxHeight(),
-                            onClick = {
-                                if (!inLauncherScreen) {
-                                    //不在主屏幕时才允许返回
-                                    backDispatcher?.onBackPressed() ?: run {
-                                        onScreenBack()
-                                    }
-                                }
-                            }
-                        ) {
-                            Icon(
-                                modifier = Modifier.size(24.dp),
-                                painter = painterResource(R.drawable.ic_arrow_back),
-                                contentDescription = stringResource(R.string.generic_back)
-                            )
-                        }
-
-                        IconButton(
-                            modifier = Modifier.fillMaxHeight(),
-                            onClick = {
-                                if (!inLauncherScreen) {
-                                    //不在主屏幕时才允许回到主页面
-                                    toMainScreen()
-                                }
-                            }
-                        ) {
-                            Icon(
-                                painter = painterResource(R.drawable.ic_home_filled),
-                                contentDescription = stringResource(R.string.generic_main_menu)
-                            )
-                        }
+            IconButton(
+                onClick = {
+                    backDispatcher?.onBackPressed() ?: run {
+                        onScreenBack()
                     }
                 }
+            ) {
+                Icon(
+                    modifier = Modifier.size(24.dp),
+                    painter = painterResource(R.drawable.ic_arrow_back),
+                    contentDescription = stringResource(R.string.generic_back)
+                )
             }
+
             val parentRes = mainScreenKey?.title
             val childRes = (mainScreenKey as? BackStackNavKey<*>)?.currentKey?.title
 
             Crossfade(
-                modifier = Modifier.constrainAs(title) {
-                    centerVerticallyTo(parent)
-                    start.linkTo(backCenter.end, margin = 16.dp)
-                },
                 targetState = parentRes to childRes
             ) { (parent, child) ->
-                val style = MaterialTheme.typography.titleMedium
-                val softWarp = false
-                val maxLines = 1
+                val style = NusaType.Title.copy(fontSize = 18.sp, lineHeight = 22.sp)
 
                 if (parent == null) {
-                    if (festivals.isEmpty()) {
-                        Text(
-                            text = BuildKeys.LAUNCHER_IDENTIFIER,
-                            style = style,
-                            softWrap = softWarp,
-                            maxLines = maxLines
-                        )
-                    } else {
-                        FestivalTitleText(
-                            festivals = festivals,
-                            style = style,
-                            maxLines = maxLines
-                        )
-                    }
+                    Text(
+                        text = BuildKeys.LAUNCHER_IDENTIFIER,
+                        style = style,
+                        softWrap = false,
+                        maxLines = 1
+                    )
                 } else {
                     val titleText = if (child != null) {
                         androidText(parent, androidText(" - "), child)
@@ -366,122 +360,13 @@ private fun <E: TitledNavKey> TopBar(
                     AndroidStringText(
                         text = titleText,
                         style = style,
-                        softWrap = softWarp,
-                        maxLines = maxLines
+                        softWrap = false,
+                        maxLines = 1
                     )
                 }
-            }
-
-            Row(
-                modifier = Modifier
-                    .constrainAs(endButtons) {
-                        top.linkTo(parent.top)
-                        bottom.linkTo(parent.bottom)
-                        end.linkTo(parent.end, margin = 12.dp)
-                    },
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                AnimatedVisibility(
-                    visible = !(isTasksExpanded || taskRunning),
-                    enter = slideInVertically(
-                        initialOffsetY = { -50 }
-                    ) + fadeIn(),
-                    exit = slideOutVertically(
-                        targetOffsetY = { -50 }
-                    ) + fadeOut()
-                ) {
-                    Row(
-                        modifier = Modifier
-                            .clip(shape = MaterialTheme.shapes.large)
-                            .clickable { changeExpandedState() }
-                            .padding(all = 8.dp)
-                            .width(120.dp),
-                        horizontalArrangement = Arrangement.spacedBy(8.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        LinearProgressIndicator(modifier = Modifier.weight(1f))
-                        Icon(
-                            modifier = Modifier.size(22.dp),
-                            painter = painterResource(R.drawable.ic_assignment_filled),
-                            contentDescription = stringResource(R.string.main_task_menu)
-                        )
-                    }
-                }
-
-                IconButton(
-                    onClick = openFileManager
-                ) {
-                    Icon(
-                        painter = painterResource(R.drawable.ic_folder_filled),
-                        contentDescription = null
-                    )
-                }
-
-                TopBarRailItem(
-                    selected = inMultiplayerScreen,
-                    painter = painterResource(R.drawable.ic_group_filled),
-                    text = stringResource(R.string.terracotta),
-                    onClick = {
-                        if (!inMultiplayerScreen) toMultiplayerScreen()
-                    },
-                )
-
-                TopBarRailItem(
-                    selected = inDownloadScreen,
-                    painter = painterResource(R.drawable.ic_download_2_filled),
-                    text = stringResource(R.string.generic_download),
-                    onClick = {
-                        if (!inDownloadScreen) toDownloadScreen()
-                    },
-                )
-
-                TopBarRailItem(
-                    selected = inSettingsScreen,
-                    painter = painterResource(R.drawable.ic_settings_filled),
-                    text = stringResource(R.string.generic_setting),
-                    onClick = {
-                        if (!inSettingsScreen) toSettingsScreen()
-                    },
-                )
             }
         }
     }
-}
-
-@Composable
-private fun TopBarRailItem(
-    selected: Boolean,
-    painter: Painter,
-    text: String,
-    modifier: Modifier = Modifier,
-    onClick: () -> Unit = {},
-    textStyle: TextStyle = MaterialTheme.typography.labelMedium
-) {
-    TextRailItem(
-        modifier = modifier,
-        onClick = onClick,
-        text = {
-            AnimatedVisibility(visible = selected) {
-                Row {
-                    Spacer(modifier = Modifier.width(6.dp))
-                    Text(
-                        text = text,
-                        style = textStyle
-                    )
-                }
-            }
-        },
-        icon = {
-            Icon(
-                painter = painter,
-                contentDescription = text
-            )
-        },
-        selected = selected,
-        selectedPadding = PaddingValues(horizontal = 16.dp, vertical = 4.dp),
-        unSelectedPadding = PaddingValues(all = 8.dp),
-    )
 }
 
 @Composable
