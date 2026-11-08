@@ -3126,4 +3126,7 @@
     <string name="nusa_home_reco_empty">Not enough data yet. Play this version with another renderer for a few minutes and a recommendation appears here.</string>
     <string name="nusa_home_renderer_settings">Renderer settings</string>
     <string name="nusa_home_unofficial">NusaLauncher %1$s. Unofficial Modified Version, based on Zalith Launcher 2.</string>
+    <!-- NusaLauncher: navigation rail -->
+    <string name="nusa_nav_multiplayer">Play together</string>
+    <string name="nusa_nav_files">Files</string>
 </resources>

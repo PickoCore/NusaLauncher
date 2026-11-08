@@ -71,7 +71,8 @@ Diadaptasi dari panduan "anti-slop" yang dirujuk proyek ini. Periksa setiap laya
 |---|---|
 | Tema (warna, huruf) | Dipasang ke seluruh aplikasi. Mode terang dan warna dinamis dari Zalith diabaikan. |
 | Beranda | Dirancang ulang (`NusaHomeScreen`); Beranda lama dihapus. |
-| Rel navigasi, Akun, Versi, Unduh, Pengaturan | Belum, hanya berganti warna dan huruf. |
+| Rel navigasi dan strip judul | Dirancang ulang (`NusaRail`); bilah atas lama dihapus. |
+| Akun, Versi, Unduh, Pengaturan | Belum, hanya berganti warna dan huruf. |
 | Tampilan dalam game dan kontrol | Belum. Dikerjakan paling akhir dan paling hati-hati. |
 
 ## Proses tiap layar
